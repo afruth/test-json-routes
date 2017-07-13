@@ -20,7 +20,15 @@ Meteor.startup(() => {
           result: "ERROR"
         }
       });
-    } else next();
+      next(new Error("unauthorized"));
+      return;
+    }
+    
+    next();
+  });
+
+  JsonRoutes.Middleware.use(function(err, req, res, next) {
+    console.log("Error found", err)
   });
 
   JsonRoutes.add('GET', '/test-route/', function(req, res, next) {
